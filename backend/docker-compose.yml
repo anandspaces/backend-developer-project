@@ -1,19 +1,19 @@
 services:
+  # Backend Service
   backend:
     build: .
     ports:
-      - "3000:3000"
+      - "3000:3000"  # Exposes the backend on port 3000
     environment:
       - JWT_SECRET=714b8653de49655fbb72f663f14b44ee82d9d4b0a5ff886c42e28be0c8e54e91248fa90c893da0014f7bc7dd0aa1a3787383eccfb09ab269d7b8816d9e449a30
-      - RABBITMQ_URL=amqp://rabbitmq
+      - RABBITMQ_URL=amqp://rabbitmq  # Connection URL for RabbitMQ
       - POSTGRES_USER=anand
       - POSTGRES_PASSWORD=anand
       - POSTGRES_DB=queuedb
-      - POSTGRES_HOST=postgres
+      - POSTGRES_HOST=postgres  # Connection details for PostgreSQL
     depends_on:
       - rabbitmq
-      - postgres
-    # Add a health check to ensure backend starts after rabbitmq and postgres
+      - postgres  # Ensures RabbitMQ and PostgreSQL start before the backend
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 10s
@@ -21,11 +21,12 @@ services:
       start_period: 30s
       timeout: 10s
 
+  # RabbitMQ Service
   rabbitmq:
-    image: rabbitmq:3-management
+    image: rabbitmq:3-management  # RabbitMQ image with management plugin
     ports:
-      - "15672:15672"
-      - "5672:5672"
+      - "15672:15672"  # RabbitMQ management UI
+      - "5672:5672"    # RabbitMQ communication port
     healthcheck:
       test: ["CMD", "rabbitmqctl", "status"]
       interval: 10s
@@ -33,14 +34,31 @@ services:
       start_period: 30s
       timeout: 10s
 
+  # PostgreSQL Service
   postgres:
-    image: postgres
+    image: postgres  # Official PostgreSQL image
     environment:
       POSTGRES_USER: anand
       POSTGRES_PASSWORD: anand
-      POSTGRES_DB: queuedb
+      POSTGRES_DB: queuedb  # PostgreSQL database name
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "anand", "-d", "queuedb"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  # Prometheus Service (Monitoring)
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"  # Expose Prometheus UI on port 9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Mount Prometheus config
+    depends_on:
+      - backend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/metrics"]
       interval: 10s
       retries: 5
       start_period: 30s
