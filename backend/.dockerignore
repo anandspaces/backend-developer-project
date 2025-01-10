@@ -1,0 +1,31 @@
+# Ignore node_modules for Docker builds
+node_modules
+
+# Logs
+logs
+*.log
+
+# Git and version control
+.git
+.gitignore
+
+# Environment variables
+.env
+
+# Local development files
+.vscode
+.idea
+
+# Build output
+dist
+build
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.swp
+*.swo
+*.bak
+*.tmp
