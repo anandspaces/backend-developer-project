@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # You can add more scrape jobs here as needed for your app, like PostgreSQL, RabbitMQ, etc.
