@@ -1,4 +1,4 @@
-const { getChannel } = require('../config/queue');
+const { getChannel } = require('../config/rabbitmqConfig');
 const { logRequest } = require('../models/logModel');
 
 const enqueueRequest = async (req, res) => {
