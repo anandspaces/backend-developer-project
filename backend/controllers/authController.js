@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');  // For hashing passwords
 const jwt = require('jsonwebtoken');  // For generating JWT tokens
-const pool = require('../config/postgresConfig');  // PostgreSQL database connection
+const pool = require('../configs/postgresConfig');  // PostgreSQL database connection
 require('dotenv').config();  // To load environment variables from .env file
 
 // Register a new user

@@ -1,5 +1,5 @@
-const { consumeFromQueue, sendToQueue } = require('../config/rabbitmqConfig');
-const pool = require('../config/postgresConfig'); // For logging or database persistence
+const { consumeFromQueue, sendToQueue } = require('../configs/rabbitmqConfig');
+const pool = require('../configs/postgresConfig'); // For logging or database persistence
 require('dotenv').config();
 
 // Map to track processing state for each user's queue

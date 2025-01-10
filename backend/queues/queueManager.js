@@ -1,4 +1,4 @@
-const { getChannel } = require('../config/rabbitmqConfig');
+const { getChannel } = require('../configs/rabbitmqConfig');
 
 /**
  * Ensure a queue exists for a specific user.

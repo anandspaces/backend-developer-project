@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
-const { connectQueue } = require('./config/queue');
+const { connectQueue } = require('./configs/rabbitmqConfig');
 const authRoutes = require('./routes/authRoutes');
-const queueRoutes = require('./routes/queueRoutes');
-const pool = require('./config/db');
+const requestRoutes = require('./routes/requestRoutes');
+const pool = require('./configs/postgresConfig'); // Database connection for logging
 const prometheus = require('prom-client'); // For Prometheus monitoring
 
 const app = express();
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/auth', authRoutes);
-app.use('/queue', queueRoutes);
+app.use('/queue', requestRoutes);
 
 // Prometheus metrics endpoint
 app.get('/metrics', async (req, res) => {

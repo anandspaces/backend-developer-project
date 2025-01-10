@@ -1,5 +1,5 @@
-const { consumeFromQueue } = require('../config/rabbitmqConfig');
-const pool = require('../config/postgresConfig'); // Database connection for logging
+const { consumeFromQueue } = require('../configs/rabbitmqConfig');
+const pool = require('../configs/postgresConfig'); // Database connection for logging
 require('dotenv').config();
 
 /**

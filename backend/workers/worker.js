@@ -1,4 +1,4 @@
-const { getChannel } = require('../config/rabbitmqConfig');
+const { getChannel } = require('../configs/rabbitmqConfig');
 
 const processQueue = async (queueName) => {
     const channel = getChannel();
