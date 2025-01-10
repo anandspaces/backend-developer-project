@@ -1,4 +1,3 @@
-version: '3'
 services:
   backend:
     build: .
@@ -11,14 +10,38 @@ services:
       - POSTGRES_PASSWORD=anand
       - POSTGRES_DB=queuedb
       - POSTGRES_HOST=postgres
+    depends_on:
+      - rabbitmq
+      - postgres
+    # Add a health check to ensure backend starts after rabbitmq and postgres
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
   rabbitmq:
     image: rabbitmq:3-management
     ports:
       - "15672:15672"
       - "5672:5672"
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
   postgres:
     image: postgres
     environment:
       POSTGRES_USER: anand
       POSTGRES_PASSWORD: anand
       POSTGRES_DB: queuedb
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "anand", "-d", "queuedb"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
