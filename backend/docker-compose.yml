@@ -5,7 +5,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - JWT_SECRET=supersecretkey
+      - JWT_SECRET=714b8653de49655fbb72f663f14b44ee82d9d4b0a5ff886c42e28be0c8e54e91248fa90c893da0014f7bc7dd0aa1a3787383eccfb09ab269d7b8816d9e449a30
       - RABBITMQ_URL=amqp://rabbitmq
       - POSTGRES_USER=anand
       - POSTGRES_PASSWORD=anand
