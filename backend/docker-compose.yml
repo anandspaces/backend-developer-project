@@ -1,0 +1,24 @@
+version: '3'
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - JWT_SECRET=supersecretkey
+      - RABBITMQ_URL=amqp://rabbitmq
+      - POSTGRES_USER=anand
+      - POSTGRES_PASSWORD=anand
+      - POSTGRES_DB=queuedb
+      - POSTGRES_HOST=postgres
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: anand
+      POSTGRES_PASSWORD: anand
+      POSTGRES_DB: queuedb
